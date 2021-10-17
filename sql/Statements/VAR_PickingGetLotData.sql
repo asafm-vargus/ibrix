@@ -1,0 +1,14 @@
+/* do not change the next line, which is the DataSource: 
+Movex Java
+*/ 
+
+
+	SELECT  LMITNO ,MMITDS, MMDCCD, MMINDI, MMUNMS, MMBACD ,
+	MLRGDT,
+	MBTOMU,
+	MLWHSL,MLSTAS,MLSTQT,MLALQT
+	FROM ##MILOMA## 
+	join ##MITLOC## on MLCONO=LMCONO and LMITNO=MLITNO and MLBANO=LMBANO and MLWHLO='%whlo%'  and MLWHSL='%whsl%' 
+	join ##MITMAS## on MMCONO=LMCONO and MMITNO=LMITNO
+	join ##MITBAL## on MBCONO=MLCONO and MBITNO=MLITNO and MBWHLO=MLWHLO
+	WHERE LMCONO=1 and LMBANO='%bano%'

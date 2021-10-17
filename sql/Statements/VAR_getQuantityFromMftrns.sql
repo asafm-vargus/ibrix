@@ -1,0 +1,38 @@
+/* do not change the next line, which is the DataSource: 
+Movex Java
+*/ 
+
+	SELECT 
+	OSPANR,
+	OSDLQT
+		,OSRIDN
+		,OSRIDL
+		,MMDCCD
+	,OSITNO,MMITDS,
+	MQWHSL,
+MQPAQT
+	,MQALQT
+/*,O0DLQT*/
+	FROM ##MFTRNS##
+	 JOIN ##MITMAS## ON OSCONO = MMCONO AND OSITNO = MMITNO
+	 
+	 
+	join ##MITALO## on MQCONO=OSCONO and MQWHLO=OSWHLO and MQITNO=OSITNO and MQRIDN=OSRIDN and MQRIDL=OSRIDL and MQBANO=OSBANO
+	/*
+	join ##MFTRND## ON MQCONO = O0CONO
+	AND MQWHLO = O0WHLO
+	AND MQRIDI = O0DLIX
+	AND MQRIDN = O0RIDN
+	AND MQRIDL = O0RIDL
+	AND MQBANO = O0BANO
+	AND MQCAMU = O0CAMU
+	AND MQPLRN = O0PLRN
+	
+		AND OSITNO = MMITNO
+		*/
+	WHERE OSCONO = %cono%
+		/*AND OSPANR = '%panr%'*/
+		AND OSWHLO = '%whlo%'
+		AND OSDLIX = '%dlix%'
+		AND OSBANO = '%bano%'
+		%WherePanr%

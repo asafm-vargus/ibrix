@@ -1,0 +1,24 @@
+
+body::before {
+  background: #003C80;
+  bottom: 12px;
+  color: #ffffff;
+  content: 'prod';
+  font-size: 13px;
+  font-weight: 900;
+  height: 25px;
+  left: -25px;
+  line-height: 27px;
+  position: fixed;
+  text-align: center;
+  text-transform: uppercase;
+  -ms-transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+  width: 100px;
+  z-index: 1000; }
+  
+  
+  }
+  
+  
