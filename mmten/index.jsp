@@ -2351,6 +2351,15 @@ body::before {
 			}
 
 		});
+		
+		$("#inpMvlBARCODE.Mvlinputs").focusout(function(event) { 
+			console.log("#inpMvlBARCODE focusout:",event);
+			getBanoData("inpMvlBARCODE");
+		});
+		$("#inpWHSL.Mvlinputs").focusout(function(event) { 
+			console.log("#inpWHSL focusout:",event);
+			getBanoData("inpWHSL");
+		});
 
 		$(".Mvlinputs").click(function() {
 			$(this).select();
@@ -2392,11 +2401,29 @@ body::before {
 			$(this).select();
 		});
 
-		$(".SmallBoxinputs").keydown(function(event) { // 31.12.15
+		$("#inpSmallBoxTRQT").keydown(function(event) { 
+		//console.log(".SmallBoxinputs:",event);
+		//alert(event.keyCode);			
+		});
+		
+		$("#inpSmallBoxTRQT").focusout(function(event) { 
+		//console.log(".SmallBoxinputs:",event);
+		getPickData("inpSmallBoxTRQT");
+		//alert("onfocusout");			
+		});
 
+
+		$(".SmallBoxinputs").keydown(function(event) { 
+		console.log(".SmallBoxinputs:",event);
+		
+			if ($(this)[0].id == "inpSmallBoxTRQT")
+				return;
+			
 			event.stopPropagation();
+			if (event.keyCode == 9)
+				event.preventDefault();
 
-			if (event.keyCode == 13) { // Enter
+		if (event.keyCode == 13 || event.keyCode == 9) { // Enter || Tab
 				var enteredField = $(this)[0].id;// console.log($(this));
 				getPickData(enteredField);
 
@@ -2481,6 +2508,14 @@ body::before {
 			}
 
 		});
+		
+		$("#inpMoPickBARCODE.MoPickDetailInputs").focusout(function(event) { 
+			if ($("#inpMoPickBARCODE").val() == "")
+				return;
+			console.log("#inpMoPickBARCODE focusout:",event);
+			MoPickDetailsEnter("inpMoPickBARCODE");
+		});
+		
 
 		$(".PhsInvinputs").click(function() {
 			$(this).select();

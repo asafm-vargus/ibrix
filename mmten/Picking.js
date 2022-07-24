@@ -147,6 +147,7 @@ function getPickData(enteredField) {
 		}
 
 	}
+	
 	if (enteredField == "inpSmallBoxTRQT") { //7.4.21
 		let trqt = $("#inpSmallBoxTRQT").val()*1; //12.4.20
 		if(trqt>0){
@@ -385,8 +386,6 @@ function runAPI_MWS423MI_PackLine(inputFields) {
 	return true;// anserAtt.ITNO.trim();
 }
 
-
-
 function runAPI_MWS423MI_UnpackPackage(inputFields) {
 
 	console
@@ -412,8 +411,6 @@ function runAPI_MWS423MI_UnpackPackage(inputFields) {
 	// GoodScanAudio.play();
 	return true;// anserAtt.ITNO.trim();
 }
-
-
 
 function runAPI_MWS423MI_UnpackLine(inputFields) {
 
@@ -473,9 +470,6 @@ function runAPI_MWS423MI_DltPackage(inputFields) {
 	return true;// anserAtt.ITNO.trim();
 }
 
-
-
-
 function runAPI_MWS423MI_ConnectPackages(inputFields) {
 
 	console
@@ -506,6 +500,7 @@ function runAPI_MWS423MI_ConnectPackages(inputFields) {
 	// GoodScanAudio.play();
 	return true;// anserAtt.ITNO.trim();
 }
+
 function runAPI_MWS423MI_AddPackage(inputFields) {
 
 	console
@@ -609,7 +604,6 @@ function delSmallPanr(panr){
 
 }
 
-
 function showBigPackageList() {
 	
 	$("#bigboxpack-listview").destroy();
@@ -703,6 +697,7 @@ function updateBigBoxWeight(panr,grwe){
 	showBigPackageList();
 	
 }
+
 function buildPACTlist(){
 	var whlo = $("#inpWHLO.Pickinputs").val();
 	
@@ -719,7 +714,6 @@ function buildPACTlist(){
 		//ddlLTYPchanged();
 	});
 }
-
 
 function newBigBoxPACT(){
 	navigator.vibrate(100); 
@@ -782,7 +776,6 @@ function lstPACT(whlo) {
 
 }
 
-
 function createBigBox(){
 	var pact=$("#inpCrtPACT").val();
 	var grwe=$("#inpCrtGRWE").val();
@@ -844,7 +837,6 @@ function getNewPanrOfBigBox(dlix, whlo) {
 	return ret;
 
 }
-
 
 function connectPackage(fromPANR){
 	
@@ -965,7 +957,6 @@ function clearBigBoxDetails(){
 	$("#inpBigBoxBARCODE").focus();
 }
 
-
 function showOneBigPackageList(panr) {
 	
 	$("#bigboxpackDetail-listview").destroy();
@@ -1010,7 +1001,6 @@ function showOneBigPackageList(panr) {
 		 });
 	}
 }
-
 
 function checkIfAlreadyPacked(dlix, panr, whlo) {
 
@@ -1059,8 +1049,6 @@ function checkIfAlreadyPacked(dlix, panr, whlo) {
 
 }
 
-
-
 function getQnatityFromMftrns(panr,bano, whlo, dlix) {
 
 	var ret = {};
@@ -1104,8 +1092,6 @@ function getQnatityFromMftrns(panr,bano, whlo, dlix) {
 
 }
 
-
-
 function toggleSmallPackageList(){
 	
 	$("#crdListLotsTitle").html("Boxes/Lots content");
@@ -1130,9 +1116,6 @@ function toggleSmallPackageList(){
 	$("packContent-listview").destroy(); //12.2.20
 	if($("#cardByItems").is(":visible")==false)	refreshSmallBoxScreen(); //12.2.20
 }
-
-
-
 
 function showPackageContent(panr) {
 	
