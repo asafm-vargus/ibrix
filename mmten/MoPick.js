@@ -87,6 +87,7 @@ function searchDeliveries(ttyp, ridn, whlo,dlix) {
 	return ret;
 
 }
+
 function showMoPickDetails(){
 	gCurrentMSGN="";
 	
@@ -136,7 +137,6 @@ function showMoPickDetails(){
 	
 }
 
-
 function showMoPickDetailsList() {
 	$("#mopick-listview").destroy();
 
@@ -174,6 +174,7 @@ function showMoPickDetailsList() {
 		}
 
 		gMoPickData = data;
+		console.log('showMoPickDetailsList success',gMoPickData);
 		$("#mopick-listview").listview({
 			source : data
 
@@ -194,7 +195,11 @@ function MoPickDetailsEnter(enteredField) {
 		var foundBano = false;
 		var SelectedBano = getSelectedPickMoBano(bano);
 		if (SelectedBano > -1) {
-			$("#inpMoPickTRQT").val(gMoPickData[SelectedBano].MQTRQT*1 - gMoPickData[SelectedBano].G2DLQT*1 ); //24.12.20
+			console.log('MoPickDetailsEnter ',gMoPickData,SelectedBano);
+			
+			//$("#inpMoPickTRQT").val(gMoPickData[SelectedBano].MQTRQT*1 - gMoPickData[SelectedBano].G2DLQT*1 ); //24.12.20
+			$("#inpMoPickTRQT").val(gMoPickData[SelectedBano].MQTRQT2D*1.0 - gMoPickData[SelectedBano].G2DLQT2D*1.0 ); // Asaf - 20211011
+			console.log("inpMoPickTRQT:", $("#inpMoPickTRQT").val());
 			$("#inpMoPickTRQT").focus();
 			$("#inpMoPickTRQT").select();
 
@@ -202,8 +207,8 @@ function MoPickDetailsEnter(enteredField) {
 
 			topSoHo.alert("Lot not found in picking list");
 			
-			$("#inpMoPickBARCODE").focus();
-			$("#inpMoPickBARCODE").select();
+			//$("#inpMoPickBARCODE").focus();
+			//$("#inpMoPickBARCODE").select();
 			return;
 		}
 
@@ -211,30 +216,31 @@ function MoPickDetailsEnter(enteredField) {
 	if (enteredField == "inpMoPickTRQT") {
 		
 		var SelectedBanoIndex = getSelectedPickMoBano(bano);
-		if( trqt*1>(gMoPickData[SelectedBanoIndex].MQTRQT*1 - gMoPickData[SelectedBanoIndex].G2DLQT*1)) {
-		var msg="Reported quantity of " + trqt + " is larger than delivered quantity of " + Math.round(gMoPickData[SelectedBanoIndex].G2DLQT) + " continue ?";
-		var msg="Reported quantity exceeds the ordered quantity, would you like to proceed? "; //12.1.21
-	  $('body').message({
-          title: 'Issue',
-          message: msg,
-          returnFocus: $(this),
-          buttons: [{
-            text: 'Continue',
-            click: function(e, modal) {
-            
-              modal.close();          
-             mhs850CoPick(bano, trqt ,SelectedBanoIndex );
-            },isDefault: true
-          }, {
-            text: 'Cancel',
-            click: function(e, modal) {
-             
-              modal.close();          
-             
-            }
-            
-          }]
-        });
+		//if( trqt*1>(gMoPickData[SelectedBanoIndex].MQTRQT*1 - gMoPickData[SelectedBanoIndex].G2DLQT*1)) {
+		if( trqt*1>(gMoPickData[SelectedBanoIndex].MQTRQT2D*1.0 - gMoPickData[SelectedBanoIndex].G2DLQT2D*1.0)) {
+			var msg="Reported quantity of " + trqt + " is larger than delivered quantity of " + Math.round(gMoPickData[SelectedBanoIndex].G2DLQT) + " continue ?";
+			var msg="Reported quantity exceeds the ordered quantity, would you like to proceed? "; //12.1.21
+		  $('body').message({
+			  title: 'Issue',
+			  message: msg,
+			  returnFocus: $(this),
+			  buttons: [{
+				text: 'Continue',
+				click: function(e, modal) {
+				
+				  modal.close();          
+				 mhs850CoPick(bano, trqt ,SelectedBanoIndex );
+				},isDefault: true
+			  }, {
+				text: 'Cancel',
+				click: function(e, modal) {
+				 
+				  modal.close();          
+				 
+				}
+				
+			  }]
+			});
 		}else{
 				mhs850CoPick(bano, trqt ,SelectedBanoIndex );
 		}
@@ -279,8 +285,10 @@ function mhs850CoPick(bano, trqt,SelectedBanoIndex ) {
 	inputFields.PLSX = plsx;
 	inputFields.BANO = bano;
 	inputFields.ITNO = itno ;
-	inputFields.QTYP = Math.round(trqt);
-	inputFields.QTYO = Math.round(trqt);
+//	inputFields.QTYP = Math.round(trqt);
+//	inputFields.QTYO = Math.round(trqt);
+	inputFields.QTYP = trqt;
+	inputFields.QTYO = trqt;
 	inputFields.RIDN =  gMoPickData[SelectedBanoIndex].MQRIDN;
 	inputFields.RIDL =  gMoPickData[SelectedBanoIndex].MQRIDL;
 	inputFields.WHSL = whsl;
