@@ -20,30 +20,16 @@ Movex Java
 		and G2RIDN=OQRIDN and G2STAT<90 ) PREVMSGN
 	FROM ##MHDISH## A
 	
-	 join ##MHPICH## B
+	LEFT JOIN ##MHPICH## B
 			on  B.PICONO = A.OQCONO
 				AND B.PIWHLO = A.OQWHLO
-				AND B.PIDLIX = A.OQDLIX
-				/*and B.PIPLSX = A.OQPLSX*/
-				AND B.PIPISS BETWEEN 40
-					AND 60
+				AND B.PIDLIX = A.OQDLIX				
+				AND B.PIPISS BETWEEN 40	AND 60
 					
 	WHERE A.OQCONO = %cono%
 		AND A.OQWHLO = '%whlo%'
 		AND A.OQPGRS < 90
-		AND A.OQTTYP = %ttyp%
-	
-		/*
-		AND EXISTS (
-			SELECT 1
-			FROM ##MHPICH## B
-			WHERE B.PICONO = A.OQCONO
-				AND B.PIWHLO = A.OQWHLO
-				AND B.PIDLIX = A.OQDLIX
-				AND B.PIPISS BETWEEN 40
-					AND 60
-			)
-			*/
+		AND A.OQTTYP = %ttyp%	
 		AND (A.OQRIDN = '%ridn%' or A.OQDLIX=%dlix% )
 	ORDER BY A.OQTTYP
 		,A.OQDLIX

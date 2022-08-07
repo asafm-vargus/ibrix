@@ -60,10 +60,6 @@ function searchDeliveries(ttyp, ridn, whlo,dlix) {
 			
 			for(i=0;i<data.length;i++){
 				if(data[i].PREVMSGN!="") data[i].ISINPROG=""; //show icon
-				if (data[i].OQPGRS == '05'){
-					RelForPick(data[i].OQDLIX);				
-					return searchDeliveries(ttyp, ridn, whlo, dlix);
-				}
 			}
 			ret = data;
 			$("#bdgMoPickDeliveries").text(data.length);
@@ -73,8 +69,6 @@ function searchDeliveries(ttyp, ridn, whlo,dlix) {
 				
 				console.log("selected "+ args);
 				gCurrentMoPickDelivery =args.selectedData[0];
-				//if (gCurrentMoPickDelivery.OQPGRS == '05')
-					//RelForPick(gCurrentMoPickDelivery.OQDLIX);
 				showMoPickDetails();
 				//gSelectedBigBox=args.selectedData[0].ORPANR;
 				//$(".btnConnectPackage").attr("disabled",false);
@@ -260,47 +254,6 @@ function getSelectedPickMoBano(bano) {
 
 	return ret;
 }
-
-function RelForPick(DLIX){
-	var inputFields = {};
-
-	inputFields.CONO = glob_ObjM3UserProp.CONO;
-	inputFields.DLIX = DLIX;
-	inputFields.OLUP = "1";
-	runAPI_MWS410_RelForPick(inputFields);
-	
-}
-
-function runAPI_MWS410_RelForPick(inputFields) {
-
-	console.log("-----------------------start runAPI_MWS410_RelForPick --------------------------------");
-	// console.log(inputFields);
-
-	var program = 'MWS410MI';
-	var transaction = 'RelForPick';
-	var returncols = ''; 
-
-	var anserAtt = RunApiProxy_OneAnswer_POST(program, transaction, returncols,
-			inputFields);
-	// var anserAtt = glob_RunApi_OneAnswer_POST(program, transaction,
-	// returncols, inputFields);
-	if (anserAtt.error != undefined && anserAtt.error != null
-			&& anserAtt.error != "") {
-
-		BadScanAudio.play();
-		topSoHo.alert(anserAtt.error);
-		return false;
-	}
-	/*
-	 * $('body').toast({ title : 'העברה לקונסולידציה', message : 'מנה:' +
-	 * inputFields.BANO + ' כמות :' + inputFields.TRQT + ' לאיתור:' +
-	 * inputFields.TWSL });
-	 */
-	// GoodScanAudio.play();
-	return anserAtt;// anserAtt.ITNO.trim();
-}
-
-
 function mhs850CoPick(bano, trqt,SelectedBanoIndex ) {
 	var whlo = gCurrentMoPickDelivery.OQWHLO;
 	var dlix = gCurrentMoPickDelivery.OQDLIX;
